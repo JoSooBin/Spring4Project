@@ -23,19 +23,19 @@
     <div class="card card-body bg-light magin1050">
         <h3 class="font-weight-bold">일반회원</h3>
 
-        <form name="joinfrm">
+        <form name="joinfrm" id="joinfrm">
             <div class="row margin30">
                 <div class="col-11 offset-1">
                     <div class="form-group row">
                         <label class="col-2 col-form-label text-info" for="name">이름</label>
-                        <input type="text" name="name" id="name" class="form-control col-2 border-info" readonly>
+                        <input type="text" name="name" id="name" class="form-control col-2 border-info" readonly value="${param.name}">
                     </div><!--이름-->
 
                     <div class="form-group row">
                         <label class="col-2 col-form-label text-info" for="jumin1">주민등록번호</label>
-                        <input type="text" name="jumin1" id="jumin1" class="form-control col-2 border-info" readonly>
+                        <input type="text" name="jumin1" id="jumin1" class="form-control col-2 border-info" readonly value="${param.jumin1}">
                         <label class="col-form-label">&nbsp;&ndash;&nbsp;</label>
-                        <input type="text" name="jumin2" id="jumin2" class="form-control col-2 border-info" readonly>
+                        <input type="password" name="jumin2" id="jumin2" class="form-control col-2 border-info" readonly value="${param.jumin2}">
                     </div><!--주민번호-->
 
                     <div class="form-group row">
@@ -116,10 +116,16 @@
 
             <div class="row margin30">
                 <div class="col-12 text-center">
-                    <button type="button" id="checkbtn" class="btn btn-primary"><i class="bi bi-check"></i>입력완료</button>
+                    <button type="button" id="joinbtn" class="btn btn-primary"><i class="bi bi-check"></i>입력완료</button>
                     <button type="button" id="cancelbtn" class="btn btn-danger"><i class="bi bi-x"></i> 취소하기</button>
                 </div>
             </div><!--버튼들-->
+
+            <input type="hidden" name="jumin" id="jumin">
+            <input type="hidden" name="zipcode" id="zipcode">
+            <input type="hidden" name="email" id="email">
+            <input type="hidden" name="phone" id="phone">
+
         </form>
     </div><!--정보입력-->
 

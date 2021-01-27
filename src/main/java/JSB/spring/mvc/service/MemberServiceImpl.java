@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+
 @Service("msrv")
 public class MemberServiceImpl implements MemberService{
 
@@ -63,5 +65,20 @@ public class MemberServiceImpl implements MemberService{
         if (cnt > 0) isOk = "1";
 
         return isOk;
+    }
+
+    @Override //로그인 체크
+    public boolean checkLogin(MemberVO mvo, HttpSession sess) {
+        boolean isLogin = false;
+
+        //로그인 성공시 회원정보를 세션에 저장
+        //회원 아이디/비밀번호가 member 테이블에 있는지 확인
+        //있으면 : 1을 반환, 없으면 : 0을 반환
+        if (mdao.selectLogin(mvo) > 0){
+            sess.setAttribute("UID",mvo.getUserid());
+            isLogin = true;
+        }
+
+        return isLogin;
     }
 }

@@ -21,11 +21,16 @@ public class MemberDAOImple implements MemberDAO{
 
     @Override //우편번호 조회
     public List<ZipcodeVO> selectZipcode(String dong){
-        return sqlSession.selectList("member.zipcode",dong);
+        return sqlSession.selectList("member.zipcode", dong);
     }
 
     @Override
     public int selectOneUserid(String uid) {
-        return sqlSession.selectOne("member.checkuid",uid);
+        return sqlSession.selectOne("member.checkuid", uid);
+    }
+
+    @Override
+    public int selectLogin(MemberVO mvo) {
+        return sqlSession.selectOne("member.checklogin", mvo);
     }
 }

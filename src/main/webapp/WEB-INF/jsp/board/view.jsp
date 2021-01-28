@@ -1,4 +1,6 @@
 <%@ page pageEncoding="utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <div id = "main">
     <div class="margin30">
         <h3><i class="bi bi-chat-dots-fill bidragup"></i>게시판</h3>
@@ -22,18 +24,11 @@
     <div class="row margin1050">
         <table class="table">
             <tr><th colspan="2" class="tblines2 tbbg1">
-                <h3>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</h3></th></tr><!--제목-->
-            <tr class="tbbg2"><td>JSB</td>
-                <td class="text-right">2021.01.25 12:12:12 / 45 / 256</td></tr><!--작성자,작성일,조회수-->
+                <h2>${bd.title}</h2></th></tr><!--제목-->
+            <tr class="tbbg2"><td>${bd.userid}</td>
+                <td class="text-right">${bd.regdate} / ${bd.thumbs} / ${bd.views}</td></tr><!--작성자,작성일,조회수-->
             <tr><td colspan="2" class="tbbg3 tblines2">
-                Donec in urna et mi lacinia fermentum ut et dui. Vivamus mattis, justo ut tristique facilisis, urna velit convallis sem, ut vestibulum diam dolor at mauris. <br>
-                Nunc elementum ante est, in malesuada lorem pulvinar non. Donec quis malesuada purus. Sed id semper nisl. Quisque accumsan dapibus pharetra.  <br>
-                In pellentesque mollis nisi eget maximus. Donec tincidunt, justo in ultricies mattis, elit lacus tincidunt lorem, at scelerisque urna tortor id justo. <br>
-                Vestibulum suscipit, dolor vel aliquet egestas, erat ipsum aliquet neque, ut euismod arcu sapien id libero. <br> <br>
-                Donec in urna et mi lacinia fermentum ut et dui. Vivamus mattis, justo ut tristique facilisis, urna velit convallis sem, ut vestibulum diam dolor at mauris. <br>
-                Nunc elementum ante est, in malesuada lorem pulvinar non. Donec quis malesuada purus. Sed id semper nisl. Quisque accumsan dapibus pharetra.  <br>
-                In pellentesque mollis nisi eget maximus. Donec tincidunt, justo in ultricies mattis, elit lacus tincidunt lorem, at scelerisque urna tortor id justo. <br>
-                Vestibulum suscipit, dolor vel aliquet egestas, erat ipsum aliquet neque, ut euismod arcu sapien id libero.
+                ${bd.contents}
             </td></tr><!--본문-->
         </table>
     </div><!--본문글-->

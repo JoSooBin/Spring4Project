@@ -38,5 +38,6 @@
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/join.js"></script>
 <script src="/js/login.js"></script>
+<script src="/js/board.js"></script>
 </body>
 </html>

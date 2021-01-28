@@ -1,14 +1,49 @@
 <%@ page pageEncoding="utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %><!--문자용-->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fnt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!--숫자용-->
+
+<!--
+    게시판 네비게이션
+    현재 페이지에 따라 보여줄 페이지 블록을 결정
+    ex) 총 페이지수pages가 27일 때
+    cp = 1 :  1 2 3 4 5 6 7 8 9 10
+    cp = 3 :  1 2 3 4 5 6 7 8 9 10
+    cp = 11 :  11 12 13 14 15 16 17 18 19 20
+    cp = 17 :  11 12 13 14 15 16 17 18 19 20
+    cp = 23 :  21 22 23 24 25 26 27 28 29 30
+    startPage = floor( (cp -1)/10 ) * 10 +1
+    ep = endPage = startPage + 9
+    pp: 한페이지에 보여줄 페이지 수
+    cp: 지금페이지
+    tp: 토탈페이지
+-->
+
+<fmt:parseNumber var="cp" value="${param.cp}"/>
+<fmt:parseNumber var="pp" value="10"/>
+<fmt:parseNumber var="bdcnt" value="${bdcnt}"/>
+
+<fmt:parseNumber var="sp" integerOnly="true" value="${( (cp-1) / pp )}" />
+<fmt:parseNumber var="sp" value="${sp * 10 +1}" />
+<fmt:parseNumber var="ep" value="${sp + 9}" />
+
+<fmt:parseNumber var="tp" value="${bdcnt / pp}" integerOnly="true" />
+<c:if test="${(bdcnt % pp) > 0}">
+    <fmt:parseNumber var="tp" value="${tp + 1}" />
+</c:if>
+
 <div id = "main">
     <div class="margin30">
-        <h3><i class="bi bi-chat-dots-fill bidragup"></i>게시판 </h3>
+        <h3><i class="bi bi-chat-dots-fill bidragup"></i>게시판</h3>
         <hr>
     </div>
 
     <div class="row margin1050">
         <div class="col-12 text-right">
             <button type="button" id="newbd" class="btn btn-info">
-                <i class="bi bi-plus-circle bidragup"></i> 새 글 쓰기</button>
+                <i class="bi bi-plus-circle bidragup"></i>새 글 쓰기</button>
         </div>
     </div><!--새 글 쓰기-->
 
@@ -33,66 +68,14 @@
                     <th>10</th>
                     <th>128</th></tr>
 
-                <tr><td>1</td>
-                    <td><a href="/board/view?bno=1">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</a></td>
-                    <td>JSB</td>
-                    <td>2020.01.13</td>
-                    <td>45</td>
-                    <td>256</td></tr>
-                <tr><td>2</td>
-                    <td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</td>
-                    <td>JSB</td>
-                    <td>2020.01.13</td>
-                    <td>45</td>
-                    <td>256</td></tr>
-                <tr><td>3</td>
-                    <td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</td>
-                    <td>JSB</td>
-                    <td>2020.01.13</td>
-                    <td>45</td>
-                    <td>256</td></tr>
-                <tr><td>4</td>
-                    <td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</td>
-                    <td>JSB</td>
-                    <td>2020.01.13</td>
-                    <td>45</td>
-                    <td>256</td></tr>
-                <tr><td>5</td>
-                    <td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</td>
-                    <td>JSB</td>
-                    <td>2020.01.13</td>
-                    <td>45</td>
-                    <td>256</td></tr>
-                <tr><td>6</td>
-                    <td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</td>
-                    <td>JSB</td>
-                    <td>2020.01.13</td>
-                    <td>45</td>
-                    <td>256</td></tr>
-                <tr><td>7</td>
-                    <td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</td>
-                    <td>JSB</td>
-                    <td>2020.01.13</td>
-                    <td>45</td>
-                    <td>256</td></tr>
-                <tr><td>8</td>
-                    <td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</td>
-                    <td>JSB</td>
-                    <td>2020.01.13</td>
-                    <td>45</td>
-                    <td>256</td></tr>
-                <tr><td>9</td>
-                    <td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</td>
-                    <td>JSB</td>
-                    <td>2020.01.13</td>
-                    <td>45</td>
-                    <td>256</td></tr>
-                <tr><td>10</td>
-                    <td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</td>
-                    <td>JSB</td>
-                    <td>2020.01.13</td>
-                    <td>45</td>
-                    <td>256</td></tr>
+                <c:forEach var="b" items="${bds}">
+                <tr><td>${b.bno}</td>
+                    <td><a href="/board/view?bno=${b.bno}">${b.title}</a></td>
+                    <td>${b.userid}</td>
+                    <td>${fn:substring(b.regdate,0,10)}</td>
+                    <td>${b.thumbs}</td>
+                    <td>${b.views}</td></tr>
+                </c:forEach>
 
                 </tbody>
             </table>
@@ -102,18 +85,30 @@
     <div class="row">
         <div class="col-12">
             <ul class="pagination justify-content-center">
-                <li class="page-item disabled"><a href="#" class="page-link">이전</a></li>
-                <li class="page-item active"><a href="#" class="page-link font-weight-bold">1</a></li>
-                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                <li class="page-item"><a href="#" class="page-link">6</a></li>
-                <li class="page-item"><a href="#" class="page-link">7</a></li>
-                <li class="page-item"><a href="#" class="page-link">8</a></li>
-                <li class="page-item"><a href="#" class="page-link">9</a></li>
-                <li class="page-item"><a href="#" class="page-link">10</a></li>
-                <li class="page-item"><a href="#" class="page-link">다음</a></li>
+                <!--'이전'이 표시될 때는 cp > 10-->
+                <li class="page-item <c:if test="${sp lt 11}">disabled</c:if>">
+                    <a href="/board/list?cp=${sp-10}" class="page-link">이전</a></li>
+
+                <c:forEach var="i" begin="${sp}" end="${ep}" step="1">
+                    <c:if test="${i le tp}">
+                        <c:if test="${i ne cp}">
+                            <li class="page-item">
+                                <a href="/board/list?cp=${i}"
+                                   class="page-link font-weight-bold">${i}</a></li>
+                        </c:if>
+
+                        <c:if test="${i eq cp}">
+                            <li class="page-item active">
+                                <a href="/board/list?cp=${i}"
+                                   class="page-link font-weight-bold">${i}</a></li>
+                        </c:if>
+                    </c:if>
+                </c:forEach>
+
+                <!--'다음'이 표시될 때는 -->
+                <li class="page-item <c:if test="${ep gt tp}">disabled</c:if>">
+                    <a href="/board/list?cp=${sp+10}" class="page-link">다음</a></li>
+
             </ul>
         </div>
     </div>

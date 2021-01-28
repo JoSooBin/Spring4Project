@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" %>
 <div id = "main margin30">
     <div class="row text-center">
         <div class="col ">

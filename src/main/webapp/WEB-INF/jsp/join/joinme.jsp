@@ -56,7 +56,7 @@
 
                     <div class="form-group row">
                         <label class="col-2 col-form-label text-info" for="repwd">비밀번호 확인</label>
-                        <input type="password" name="passwd" id="repwd" class="form-control col-2 border-info" >
+                        <input type="password" name="repwd" id="repwd" class="form-control col-2 border-info" >
                         <span class="col-form-label text-danger">&nbsp;이전 항목에서 입력했던 비밀번호를 한번 더 입력하세요</span>
                     </div><!--비밀번호 확인-->
 

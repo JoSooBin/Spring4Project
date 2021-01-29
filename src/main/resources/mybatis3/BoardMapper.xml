@@ -36,4 +36,9 @@
       select count(bno) cnt from Board
    </select>
 
+   <update id="viewCount" statementType="PREPARED" parameterType="String">
+        update Board set views = views + 1
+        where bno = #{bno}
+   </update>
+
 </mapper>

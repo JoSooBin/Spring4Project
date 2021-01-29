@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class BoardController {
 
@@ -41,7 +44,8 @@ public class BoardController {
     //게시판 목록 처리 2 : 검색처리
     @GetMapping("/board/list")//게시판 목록 출력
     public ModelAndView list(ModelAndView mv, String cp){
-        if (cp == null) cp = "1";
+        //if (cp == null) cp = "1";
+        //header.jsp에 ?cp=1를 추가했기 때문에 더이상 필요 없음
 
         mv.setViewName("board/list.tiles");
         mv.addObject("bds", bsrv.readBoard(cp));
@@ -53,25 +57,70 @@ public class BoardController {
     @GetMapping("/board/view")//게시판 본문글 출력
     public ModelAndView view(String bno, ModelAndView mv){
         mv.setViewName("board/view.tiles");
+
         mv.addObject("bd", bsrv.readOneBoard(bno));
+        bsrv.viewCountBoard(bno); //조회수 증가
 
         return mv;
     }
 
     @GetMapping("/board/write")//새글쓰기 폼
-    public String write(){
-        return "board/write.tiles";
+    public String write( HttpSession sess){
+        String returnPage = "redirect:/index";
+
+        //로그인 했으면 새글쓰기 폼 출력
+        if(sess.getAttribute("UID") != null)
+            returnPage = "board/write.tiles";
+
+        return returnPage;
     }
 
     @PostMapping("/board/write") //새글쓰기 처리
-    public String writeok(BoardVO bvo){
+    public String writeok(BoardVO bvo, HttpSession sess){
         String returnPage = "redirect:/board/write";
 
-        bvo.setUserid("야옹이");
-       if(bsrv.newBoard(bvo))
-            returnPage = "redirect:/board/list";
+       if(sess.getAttribute("UID") != null && bsrv.newBoard(bvo))
+            returnPage = "redirect:/board/list?cp=1";
 
         return returnPage;
+    }
+
+    @GetMapping("/board/update") //수정하기 폼
+    public ModelAndView update(String bno, ModelAndView mv, HttpSession sess){
+
+        //로그인했으면 수정하기 창이 보이고 아니면 인덱스 화면으로 넘어감
+        if(sess.getAttribute("UID") != null && bno != null) {
+            mv.setViewName("board/update.tiles");
+            mv.addObject("bd", bsrv.readOneBoard(bno));
+        }else {
+            mv.setViewName("redirect:/index");
+        }
+        return mv;
+    }
+
+    @PostMapping("/board/update") //수정하기 완료
+    public String updateok(BoardVO bvo, String cp, HttpSession sess, String userid){
+        String param = "?bno=" + bvo.getBno();
+        param += "&cp=" + cp;
+        String returnPage = "redirect:/board/update" + param;
+
+        //로그인한 사용자이면서 수정하는 글이 자신이 쓴것이라면
+        if(sess.getAttribute("UID").equals(userid) && bsrv.modifyBoard(bvo)) {
+            returnPage = "redirect:/board/view" + param;
+        }
+        return returnPage;
+    }
+
+    @GetMapping("/board/delete") //삭제하기
+    public String delete(String bno, String cp, HttpSession sess, String userid){
+        //추가적으로 작성해야하는 코드 : 보안측면
+        //삭제하려면 로그인필요
+        //또한, 자기가 작성한 글만 삭제 가능
+
+        if(sess.getAttribute("UID").equals(userid))
+        bsrv.removeBoard(bno);
+
+        return "redirect:/board/list?cp=" + cp;
     }
 
 

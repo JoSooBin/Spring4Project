@@ -1,11 +1,18 @@
 <%@ page pageEncoding="utf-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!--로그인하지않았다면 list페이지로 강제 전환-->
+<c:if test="test${empty UID}">
+    <c:redirect url="/board/list?cp=1"/>
+</c:if>
+
 <div id = "main">
     <div class="margin30">
         <h3><i class="bi bi-pencil-square bidragup"></i>수정하기</h3>
         <hr>
     </div>
 
-    <form id="newbdfrm">
+    <form id="upbdfrm">
         <div class="row margin1050">
             <div class="col-6">
                 <h4><i class="bi bi-plus-circle-fill bidragup"></i> 새글쓰기</h4>
@@ -19,26 +26,30 @@
         <div class="card card-body bg-light margin1050">
             <div class="form-group row">
                 <label class="col-form-label col-2 text-right">제목</label>
-                <input type="text" id="title" name="title" class="form-control col-9">
+                <input type="text" id="title" name="title" class="form-control col-9" value="${bd.title}">
             </div>
             <div class="form-group row">
                 <label class="col-form-label col-2 text-right">작성자</label>
-                <input type="text" id="uid" name="userid" class="form-control col-9" readonly>
+                <input type="text" id="uid" name="userid" class="form-control col-9" readonly  value="${bd.userid}">
             </div>
             <div class="form-group row">
                 <label for="contents" class="col-form-label col-2 text-right">본문내용</label>
-                <textarea type="text" id="contents" name="contents" class="form-control col-9" rows="15"></textarea>
+                <textarea type="text" id="contents" name="contents" class="form-control col-9"
+                          rows="15">${bd.contents}</textarea>
             </div>
             <div class="row">
                 <label class="col-2 text-right">자동가입방지</label>
                 <img src="../../img/google_recaptcha.gif" width="40%" height="40%" style="margin-left: -3px;">
             </div>
-        </div><!--새글쓰기 폼-->
+        </div><!--수정하기 폼-->
+
+        <input type="hidden" name="bno" value="${param.bno}">
+        <input type="hidden" name="cp" value="${param.cp}">
 
         <div class="row margin1050">
             <div class="col-12 text-center">
-                <button type="button" id="updbbtn" class="btn btn-primary"><i class="bi bi-check"></i>수정완료</button>
-                <button type="button" id="cancelbtn" class="btn btn-danger"><i class="bi bi-x"></i> 취소하기</button>
+                <button type="button" id="upbdokbtn" class="btn btn-primary"><i class="bi bi-check"></i>수정완료</button>
+                <button type="button" id="ccupbdbtn" class="btn btn-danger"><i class="bi bi-x"></i> 취소하기</button>
             </div>
         </div>
     </form>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository("bdao")
 public class BoardDAOImpl implements BoardDAO {
@@ -20,6 +21,11 @@ public class BoardDAOImpl implements BoardDAO {
     @Override
     public List<BoardVO> selectBoard(int snum) {
         return sqlSession.selectList("board.selectList", snum);
+    }
+
+    @Override
+    public List<BoardVO> findSelectList(Map<String, Object> param) {
+        return sqlSession.selectList("board.findSelectList", param);
     }
 
     @Override
@@ -45,5 +51,10 @@ public class BoardDAOImpl implements BoardDAO {
     @Override
     public int updateViewCount(String bno) {
         return sqlSession.update("board.viewCount", bno);
+    }
+
+    @Override
+    public int selectCountBoard(Map<String, String> param) {
+        return sqlSession.selectOne("board.findCountBoard", param);
     }
 }

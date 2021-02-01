@@ -42,3 +42,33 @@ where bno = 1;
 
 delete from Board where bno = 1;
 
+-- reply
+create table Reply (
+    rno int primary key auto_increment,
+    cno int not null ,
+    bno int not null ,
+    reply text not null ,
+    userid varchar(16) not null ,
+    regdate timestamp default current_timestamp
+);
+
+alter table Reply add constraint fk_mr foreign key (userid) references Member(userid);
+-- 비식별키를 이용한 외래키
+
+alter table Reply add constraint fk_br foreign key (bno) references Board(bno);
+-- 식별키를 이용한 외리캐
+
+-- insert
+insert into Reply (cno, bno, userid, reply) values(1, 222, 'user1', '오늘은 날씨가..');
+insert into Reply (cno, bno, userid, reply) values(2, 222, 'user2', '점심메뉴는... ');
+insert into Reply (cno, bno, userid, reply) values(3, 222, 'user3', '월요병이 도졌나....');
+insert into Reply (cno, bno, userid, reply) values(1, 222, 'user10', '비올꺼 같아요');
+insert into Reply (cno, bno, userid, reply) values(5, 222, 'user25', '블라블라...');
+insert into Reply (cno, bno, userid, reply) values(1, 222, 'user9', '블라블라블라블라...');
+insert into Reply (cno, bno, userid, reply) values(7, 222, 'user23', '블라블라블라블라블라블라...');
+
+-- select
+select * from Reply where bno = 222 order by cno;
+
+-- 데이터 생성시 반영될 auto_increment값 조회
+select auto_increment from information_schema.TABLES where TABLE_NAME = 'Reply';

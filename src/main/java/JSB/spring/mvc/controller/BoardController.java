@@ -50,7 +50,7 @@ public class BoardController {
 
         mv.setViewName("board/list.tiles");
         mv.addObject("bds", bsrv.readBoard(cp));
-        mv.addObject("bdcnt", bsrv.countBoard());
+        mv.addObject("bdcnt", bsrv.countBoard()); //총게시물 수
 
         return mv;
     }
@@ -139,7 +139,8 @@ public class BoardController {
     public String replyok(ReplyVO rvo){
         String returnPage = "redirect:/board/view?bno=" + rvo.getBno();
 
-        brsrv.newReply(rvo);
+        if(rvo.getCno() == null) brsrv.newReply(rvo);
+        else brsrv.newReReply(rvo);
 
         return returnPage;
     }

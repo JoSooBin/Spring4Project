@@ -16,9 +16,15 @@ public class BoardReplyDAOImpl implements BoardReplyDAO {
         return sqlSession.selectList("reply.selectList", bno);
     }
 
-    @Override
+    @Override //댓글쓰기
     public int insertReply(ReplyVO rvo){
         rvo.setCno(selectLastRno());
+        //댓글 저장시 최근댓글번호을 알아내서 cno에 저장
+        return sqlSession.insert("reply.insertReply", rvo);
+    }
+
+    @Override //대댓글쓰기
+    public int insertReReply(ReplyVO rvo){
         return sqlSession.insert("reply.insertReply", rvo);
     }
 

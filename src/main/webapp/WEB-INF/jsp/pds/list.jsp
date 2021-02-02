@@ -52,16 +52,16 @@
 <%--검색 여부에 따라 네비게이션 링크출력을 다르게 함--%>
 <%--일반 목록 출력: /board/list?cp=--%>
 <%--검색 후 목록 출력: /board/find?findtype=???&findkey=???&cp=??--%>
-<c:set var="navlnk" value="/board/list?cp=" />
+<c:set var="navlnk" value="/pds/list?cp=" />
 <c:if test="${not empty param.findkey}">
     <c:set var="navlnk">
-        /board/find?findtype=${param.findtype}&findkey=${param.findkey}$cp=</c:set>
+        /pds/find?findtype=${param.findtype}&findkey=${param.findkey}$cp=</c:set>
 </c:if>
 
 
 <div id = "main">
     <div class="margin30">
-        <h3><i class="bi bi-chat-dots-fill bidragup"></i>게시판</h3>
+        <h3><i class="bi bi-cloud-download-fill bidragup"></i>자료실</h3>
         <hr>
     </div>
 
@@ -88,7 +88,7 @@
 
                 <c:forEach var="b" items="${bds}">
                 <tr><td>${snum}</td>
-                    <td><a href="/board/view?bno=${b.bno}&cp=${cp}">${b.title}</a></td>
+                    <td><a href="/pds/view?bno=${b.bno}&cp=${cp}">${b.title}</a></td>
                     <td>${b.userid}</td>
                     <td>${fn:substring(b.regdate,0,10)}</td>
                     <td>${b.thumbs}</td>

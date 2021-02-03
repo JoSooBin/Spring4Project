@@ -12,4 +12,6 @@ public interface PdsDAO {
     int selectCountPds();
 
     PdsVO selectOnePds(String pno);
+
+    PdsVO selectOneFname(String pno, String order);
 }

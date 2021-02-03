@@ -6,9 +6,9 @@
 <mapper namespace="pds">
     <insert id="insertPds" statementType="PREPARED" parameterType="JSB.spring.mvc.vo.PdsVO">
         insert into Pds(title, userid, contents, fname1, fname2, fname3,
-                        fsize1, fsize2, fsize3, ftype1, ftype2, ftype3)
+                        fsize1, fsize2, fsize3, ftype1, ftype2, ftype3,uuid)
         values (#{title},#{userid},#{contents},#{fname1},#{fname2},#{fname3},
-                #{fsize1},#{fsize2},#{fsize3},#{ftype1},#{ftype2},#{ftype3});
+                #{fsize1},#{fsize2},#{fsize3},#{ftype1},#{ftype2},#{ftype3},#{uuid});
     </insert>
 
     <select id="selectList" statementType="PREPARED" resultType="JSB.spring.mvc.vo.PdsVO">
@@ -24,4 +24,11 @@
             resultType="JSB.spring.mvc.vo.PdsVO">
         select * from Pds where pno = #{pno};
     </select>
+
+    <select id="selectOneFname" statementType="PREPARED" parameterType="Map" resultType="JSB.spring.mvc.vo.PdsVO">
+        select
+            ${order} fname1, uuid from Pds
+            where pno=#{pno};
+    </select>
+
 </mapper>

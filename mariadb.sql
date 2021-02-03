@@ -91,12 +91,12 @@ create table Pds (
                      ftype1 varchar(5),
                      ftype2 varchar(5),
                      ftype3 varchar(5),
-                     fdown1 int,
-                     fdown2 int,
-                     fdown3 int
+                     fdown1 int default 0,
+                     fdown2 int default 0,
+                     fdown3 int default 0
 );
 -- CRUD
-insert into Pds(title, userid, contents, fname1, fname2, fname3, fsize1, fsize2, fsize3, ftype1, ftype2, ftype3, fdown1, fdown2, fdown3)
+insert into Pds(title, userid, contents, fname1, fname2, fname3, fsize1, fsize2, fsize3, ftype1, ftype2, ftype3)
 values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
 
 select pno,title,userid,regdate,thumbs,views from Pds order by pno desc ;

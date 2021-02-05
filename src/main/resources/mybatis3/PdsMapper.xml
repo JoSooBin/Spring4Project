@@ -8,12 +8,12 @@
         insert into Pds(title, userid, contents, fname1, fname2, fname3,
                         fsize1, fsize2, fsize3, ftype1, ftype2, ftype3,uuid)
         values (#{title},#{userid},#{contents},#{fname1},#{fname2},#{fname3},
-                #{fsize1},#{fsize2},#{fsize3},#{ftype1},#{ftype2},#{ftype3},#{uuid});
+                #{fsize1},#{fsize2},#{fsize3},#{ftype1},#{ftype2},#{ftype3},#{uuid})
     </insert>
 
     <select id="selectList" statementType="PREPARED" resultType="JSB.spring.mvc.vo.PdsVO">
         select pno,title,userid,regdate,thumbs,views
-        from Pds order by pno desc limit #{startnum}, 10;
+        from Pds order by pno desc limit #{startnum}, 10
     </select>
 
     <select id="countPds" statementType="PREPARED" resultType="int" >
@@ -22,13 +22,17 @@
 
     <select id="selectOne" statementType="PREPARED" parameterType="String"
             resultType="JSB.spring.mvc.vo.PdsVO">
-        select * from Pds where pno = #{pno};
+        select * from Pds where pno = #{pno}
     </select>
 
     <select id="selectOneFname" statementType="PREPARED" parameterType="Map" resultType="JSB.spring.mvc.vo.PdsVO">
         select
             ${order} fname1, uuid from Pds
-            where pno=#{pno};
+            where pno=#{pno}
     </select>
+
+    <update id="downCount" statementType="PREPARED" parameterType="int">
+        update Pds set ${order} =  ${order}  +1 where pno = ${pno}
+    </update>
 
 </mapper>

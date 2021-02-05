@@ -4,9 +4,8 @@ import JSB.spring.mvc.dao.PdsDAO;
 import JSB.spring.mvc.vo.PdsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +43,15 @@ public class PdsServiceImpl implements PdsService{
     @Override
     public PdsVO readOneFname(String pno, String order) {
         return pdao.selectOneFname(pno, order);
+    }
+
+    @Override
+    public boolean downCountPds(String pno, String order) {
+        Map<String , String> param = new HashMap<>();
+        param.put("pno",pno);
+        param.put("order", "fdown" + order);
+        int cnt = pdao.updateDownCount(param);
+        return true;
     }
 
     //폼데이터를 PdsVO에 나눠 담음

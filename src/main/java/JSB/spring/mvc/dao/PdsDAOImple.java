@@ -41,4 +41,9 @@ public class PdsDAOImple implements PdsDAO {
 
         return sqlSession.selectOne("pds.selectOneFname", param);
     }
+
+    @Override
+    public int updateDownCount(Map<String, String> param) {
+        return sqlSession.update("pds.downCount", param);
+    }
 }

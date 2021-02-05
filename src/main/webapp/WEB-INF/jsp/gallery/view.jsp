@@ -13,24 +13,11 @@
 <c:set var="newChar" value="
 " scope="application"/>
 
-<c:set var="atticon1" value="${pd.ftype1}" />
-<c:if test="${pd.ftype1 ne 'zip' and pd.ftype1 ne 'jpg' and pd.ftype1 ne 'txt' }">
-    <c:set var="atticon1" value="file" />
-</c:if>
-
-<c:set var="atticon2" value="${pd.ftype2}" />
-<c:if test="${pd.ftype2 ne 'zip' and pd.ftype2 ne 'jpg' and pd.ftype2 ne 'txt' }">
-    <c:set var="atticon2" value="file" />
-</c:if>
-
-<c:set var="atticon3" value="${pd.ftype3}" />
-<c:if test="${pd.ftype3 ne 'zip' and pd.ftype3 ne 'jpg' and pd.ftype3 ne 'txt' }">
-    <c:set var="atticon3" value="file" />
-</c:if>
+<c:set var="baseImgURL" value="http://localhost/cdn/" />
 
 <div id = "main">
     <div class="margin30">
-        <h3><i class="bi bi-cloud-download-fill bidragup"></i>자료실</h3>
+        <h3><i class="bi bi-card-image bidragup"></i>갤러리</h3>
         <hr>
     </div>
 
@@ -43,7 +30,7 @@
                 <i class="bi bi-chevron-right bidragup"></i>다음게시물</button>
         </div>
         <div class="col-6 text-right">
-                <button type="button" id="newbd" class="btn btn-light">
+                <button type="button" id="newgal" class="btn btn-light">
                     <i class="bi bi-plus-circle-fill bidragup"></i>새글쓰기</button>
         </div>
     </div><!--버튼들-->
@@ -51,26 +38,27 @@
     <div class="row margin1050">
         <table class="table">
             <tr><th colspan="2" class="tblines2 tbbg1">
-                <h2>${pd.title}</h2></th></tr><!--제목-->
-            <tr class="tbbg2"><td>${pd.userid}</td>
-                <td class="text-right">${pd.regdate} / ${pd.thumbs} / ${pd.views}</td></tr><!--작성자,작성일,조회수-->
+                <h2>${gal.title}</h2></th></tr><!--제목-->
+            <tr class="tbbg2"><td>${gal.userid}</td>
+                <td class="text-right">${gal.regdate} / ${gal.thumbs} / ${gal.views}</td></tr><!--작성자,작성일,조회수-->
             <tr><td colspan="2" class="tbbg3 tblines2">
-                ${fn:replace(pd.contents, newChar, "<br>")}
-            </td></tr><!--본문-->
-            <tr><td class="text-left">첨부1</td>
-                <td><img src="/img/${atticon1}.png">
-                    <a href="/pds/down?pno=${pd.pno}&order=1">${pd.fname1}</a>(${pd.fsize1}KB, ${pd.fdown1}회 다운로드함)</td></tr>
 
-            <c:if test="${not empty pd.fname2}">
-            <tr><td class="text-left">첨부2</td>
-                <td><img src="/img/${atticon2}.png">
-                    <a href="/pds/down?pno=${pd.pno}&order=2">${pd.fname2}</a>(${pd.fsize2}KB, ${pd.fdown2}회 다운로드함)</td></tr>
+                <c:forEach begin="0" end="2" step="1" var="i">
+                    <c:if test="${fn:split(gal.fnames,'[/]')[i] ne '-'}">
+                        <img src="${baseImgURL}${fn:split(gal.fnames,"[/]")[i]}" width="650px">
+                    </c:if>
+                </c:forEach>
+
+                <p>${fn:replace(gal.contents, newChar, "<br>")}</p>
+            </td></tr><!--본문-->
+
+            <c:forEach begin="0" end="2" step="1" var="i">
+            <c:if test="${fn:split(gal.fnames,'[/]')[i] ne '-'}">
+            <tr><td class="text-left">첨부${i+1}</td>
+                <td>${fn:split(gal.fnames,"[/]")[i]}
+                    (${fn:split(gal.fsizes,"[/]")[i]}KB</td></tr>
             </c:if>
-            <c:if test="${not empty pd.fname3}">
-            <tr><td class="text-left">첨부3</td>
-                <td><img src="/img/${atticon3}.png">
-                    <a href="/pds/down?pno=${pd.pno}&order=3">${pd.fname3}</a>(${pd.fsize3}KB, ${pd.fdown3}회 다운로드함)</td></tr>
-            </c:if>
+            </c:forEach>
         </table>
     </div><!--본문글-->
 

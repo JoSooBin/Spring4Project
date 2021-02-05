@@ -89,9 +89,11 @@ public class PdsController {
         try {
             PdsVO p = psrv.readOneFname(pno, order);
             fud.procDownloadV2(p.getFname1(), p.getUuid(), res);
+            psrv.downCountPds(pno, order);   //첨부파일 다운수 처리
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }

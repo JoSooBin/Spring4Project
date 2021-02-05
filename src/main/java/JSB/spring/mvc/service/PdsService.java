@@ -14,4 +14,6 @@ public interface PdsService {
     PdsVO readOnePds(String cp);
 
     PdsVO readOneFname(String pno, String order);
+
+    boolean downCountPds(String pno, String order);
 }

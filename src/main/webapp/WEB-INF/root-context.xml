@@ -20,7 +20,7 @@
     <bean id="dbcpDataSource"
           class="org.apache.commons.dbcp2.BasicDataSource"
           p:driverClassName="${DRV}" p:url="${URL}"
-          p:username="${USR}" p:password="${PWD}" />
+          p:username="${USR}" p:password="playground2020" />
 
     <!--myBatis3 설정 #1-->
     <bean id="sqlSessionFactory"

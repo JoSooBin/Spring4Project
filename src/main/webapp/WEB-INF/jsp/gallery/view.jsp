@@ -13,7 +13,8 @@
 <c:set var="newChar" value="
 " scope="application"/>
 
-<c:set var="baseImgURL" value="http://localhost/cdn/" />
+<%--<c:set var="baseImgURL" value="http://localhost/cdn/" />--%>
+<c:set var="baseImgURL" value="http://52.79.227.168:7220/cdn/" />
 
 <div id = "main">
     <div class="margin30">

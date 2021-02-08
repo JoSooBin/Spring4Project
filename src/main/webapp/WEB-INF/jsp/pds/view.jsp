@@ -59,17 +59,20 @@
             </td></tr><!--본문-->
             <tr><td class="text-left">첨부1</td>
                 <td><img src="/img/${atticon1}.png">
-                    <a href="/pds/down?pno=${pd.pno}&order=1">${pd.fname1}</a>(${pd.fsize1}KB, ${pd.fdown1}회 다운로드함)</td></tr>
+                    <a href="/pds/down?pno=${pd.pno}&order=1">
+                        ${pd.fname1}</a>(${pd.fsize1}KB, ${pd.fdown1}회 다운로드함)</td></tr>
 
-            <c:if test="${not empty pd.fname2}">
+            <c:if test="${not empty pd.fname2 ne '-'}">
             <tr><td class="text-left">첨부2</td>
                 <td><img src="/img/${atticon2}.png">
-                    <a href="/pds/down?pno=${pd.pno}&order=2">${pd.fname2}</a>(${pd.fsize2}KB, ${pd.fdown2}회 다운로드함)</td></tr>
+                    <a href="/pds/down?pno=${pd.pno}&order=2">
+                            ${pd.fname2}</a>(${pd.fsize2}KB, ${pd.fdown2}회 다운로드함)</td></tr>
             </c:if>
-            <c:if test="${not empty pd.fname3}">
+            <c:if test="${not empty pd.fname3 ne '-'}">
             <tr><td class="text-left">첨부3</td>
                 <td><img src="/img/${atticon3}.png">
-                    <a href="/pds/down?pno=${pd.pno}&order=3">${pd.fname3}</a>(${pd.fsize3}KB, ${pd.fdown3}회 다운로드함)</td></tr>
+                    <a href="/pds/down?pno=${pd.pno}&order=3">
+                            ${pd.fname3}</a>(${pd.fsize3}KB, ${pd.fdown3}회 다운로드함)</td></tr>
             </c:if>
         </table>
     </div><!--본문글-->

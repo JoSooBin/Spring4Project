@@ -5,6 +5,8 @@
 =>아트팩트 => 프로젝트명:war
 Bulid => builds Artifacts => 프로젝트명:war => action은 Build 선택
 
+cd /usr/share/tomcat으로 접속해 8080포트열기
+
 2. AWS 톰캣서버의 webapp에 업로드하기
 1번과정에서 생성된 결과물인 war파일을 winscp를 이용해서 tomcat/webapp에 업로드함
 ->톰캣서버가 자동으로  war파일을 배포함

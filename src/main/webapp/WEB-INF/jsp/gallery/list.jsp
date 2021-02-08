@@ -61,7 +61,8 @@
 
 <%--이미지 출력을 위한 기본 주소 설정--%>
 <%--"http://localhost/cdn/_thumb/small_글번호_파일명--%>
-<c:set var="baseImgURL" value="http://localhost/cdn"/>
+<%--<c:set var="baseImgURL" value="http://localhost/cdn"/>--%>
+<c:set var="baseImgURL" value="http://52.79.227.168:7220/cdn"/>
 <c:set var="thumbURL" value="${baseImgURL}/_thumb/small_"/>
 
 <%--bootstrap의 card image 사용시 card박스의 크기는 240px (15rem)

@@ -131,3 +131,16 @@ firewall-cmd --reload
 브라우져로 웰컴이미지 확인
 http://아이피주소:포트번호 -> 404 not found
 http://아이피주소:포트번호/abc.jpg -> 403 forbidden
+
+# nginx 유저 변경
+1.vi /etc/nginx/nginx.conf에서 위의 권한 유저로 user 변경
+#user nginx; <-주석처리
+#user centos; <- 새로 추가
+
+2.systemctl restart nginx
+
+3. http://아이피:포트/cdn/abc.jpg
+
+썸네일 폴더 생성
+
+자료실폴더 생성

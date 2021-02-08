@@ -7,10 +7,16 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.servlet.ServletRequestContext;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -23,7 +29,8 @@ public class FileUpDownUtil {
     // -> commons.apache.org
     //3. Servlet 3.x부터 파일업로드 내장 - MultipartFile
 
-    private String uploadPath = "c:/Java/pdsupload/";
+    //private String uploadPath = "c:/Java/pdsupload/";
+    private String uploadPath = "/home/centos/pdsupload/";
     // 파일 업로드시 저장된 경로 지정
 
     // 업로드 처리 메서드
@@ -119,6 +126,42 @@ public class FileUpDownUtil {
         return frmdata;
     }
 
+    //MultipartFile로 구현된 업로드 처리 소스
+    public String proUpload2(MultipartFile mf, String uuid) {
+        String ofname = mf.getOriginalFilename(); //원 파일명 가져옴
+
+        //abc.txt           : fnames[1] -> txt
+        //abc.123.xyz.png   : fnames[3] -> png
+        int pos=ofname.lastIndexOf(".");
+        String ftype = ofname.substring(pos + 1);
+        String fname = ofname.substring(0,pos);
+
+        String nfname = fname + uuid + "." + ftype; // 새로운 파일명 생성
+
+        try {
+            mf.transferTo(new File(uploadPath + nfname)); //지정한 위치로 파일 저장
+
+            //업로드한 파일의 퍼미션을 설정, 즉, 업로드한 파일의 권한을 755(rwxr-xr-x)로 설정
+            //read: 4, write :2, execute: 1
+            String perms = "rwxr-xr-x";
+            Path img = Paths.get(uploadPath + nfname);
+            Set<PosixFilePermission> pfp = PosixFilePermissions.fromString(perms);
+            Files.setPosixFilePermissions(img, pfp); //linux
+        }catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return ofname + "/" + (mf.getSize()/1024) + "/" + ftype;
+    }
+
+    // 겹치치 않는 파일명을 위해 유니크한 임의의 값 생성
+    public String makeUUID() {
+        String fmt = "yyyyMMddHHmmss";
+        SimpleDateFormat sdf = new SimpleDateFormat(fmt);
+
+        return sdf.format(new Date());
+    }
+
     // 다운로드 처리 메서드
     public void procDownload(
             HttpServletRequest req,
@@ -203,7 +246,8 @@ public class FileUpDownUtil {
             HttpServletResponse res) throws IOException {
 
         //다운로드 할 파일이름 조합
-        String fName = fname.split("[.]")[0] + uuid + "." + fname.split("[.]")[1] ;
+        int pos = fname.lastIndexOf(".");
+        String fName = fname.substring(0,pos) + uuid + "." + fname.substring(pos+1);
 
         // HTTP 응답을 위해 stream 관련 변수 선언
         InputStream is = null;
@@ -271,5 +315,4 @@ public class FileUpDownUtil {
         } // try
 
     } // method
-
 }

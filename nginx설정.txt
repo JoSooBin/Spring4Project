@@ -141,6 +141,44 @@ http://아이피주소:포트번호/abc.jpg -> 403 forbidden
 
 3. http://아이피:포트/cdn/abc.jpg
 
-썸네일 폴더 생성
 
-자료실폴더 생성
+--0208
+centos
+
+암호입력
+
+sudo su
+
+cd /usr/share/tomcat
+
+./bin/shutdown.sh
+
+./bin/startup.sh
+
+
+~/gallery/write 이용해서 이미지 업로드     (브라우져)
+
+ls /home/centos/imgupload       (푸티)
+업로드된 이미지파일 확인
+
+aws아이피:전화번호뒷4자리/cdn/업로드한이미지파일명     (브라우져)
+
+썸내일 폴더 생성
+mkdir /home/centos/imgupload/_thumb
+
+chmod 777 /home/centos/imgupload/_thumb
+
+chown centos:centos /home/centos/imgupload/_thumb
+
+
+자료실 업로드 폴더 생성
+mkdir /home/centos/pdsupload
+
+chmod 777 /home/centos/pdsupload
+
+chown centos:centos /home/centos/pdsupload
+
+
+썸내일 확인용 주소
+
+aws아이피:전화번호뒷4자리/cdn/_thumb/small_?_업로드한이미지파일명
